@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Calculator, Copy, CheckCircle, Trash2 } from "lucide-react";
+import {
+  Calculator,
+  Copy,
+  CheckCircle,
+  Trash2,
+  X,
+  Sun,
+  Moon,
+} from "lucide-react";
 
 function App() {
   const [scenario, setScenario] = useState(
@@ -18,6 +26,33 @@ function App() {
   );
   const [overlayOpen, setOverlayOpen] = useState(false);
 
+  const [showIdModal, setShowIdModal] = useState(false);
+  const [tempId, setTempId] = useState("");
+
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "light"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("scenario", scenario);
+    localStorage.setItem("input", input);
+    localStorage.setItem("rate", rate);
+    localStorage.setItem("shipments", JSON.stringify(shipments));
+    localStorage.setItem("theme", theme);
+  }, [scenario, input, rate, shipments, theme]);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
   const scenarioNames = {
     1: "Diamonds → SAR",
     2: "SAR → Diamonds",
@@ -26,13 +61,6 @@ function App() {
     5: "JOD → Diamonds",
     6: "Diamonds → JOD",
   };
-
-  useEffect(() => {
-    localStorage.setItem("scenario", scenario);
-    localStorage.setItem("input", input);
-    localStorage.setItem("rate", rate);
-    localStorage.setItem("shipments", JSON.stringify(shipments));
-  }, [scenario, input, rate, shipments]);
 
   useEffect(() => {
     handleCalculate();
@@ -95,14 +123,31 @@ function App() {
 
   const handleShip = () => {
     if (!input || !result) return;
+    setShowIdModal(true);
+  };
+
+  const confirmShip = () => {
+    if (!tempId) return;
+
+    const now = new Date();
+    const dateTime = now.toLocaleString("ar-EG", {
+      dateStyle: "short",
+      timeStyle: "short",
+    });
+
     const newShipment = {
       id: Date.now(),
       input,
       result,
       rate,
       scenario,
+      userId: tempId,
+      dateTime,
     };
+
     setShipments([newShipment, ...shipments]);
+    setTempId("");
+    setShowIdModal(false);
   };
 
   const handleDelete = (id) => {
@@ -113,7 +158,18 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl shadow-2xl p-6 transition">
+      <div className="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl shadow-2xl p-6 transition relative">
+        <button
+          onClick={toggleTheme}
+          className="absolute top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition"
+        >
+          {theme === "dark" ? (
+            <Sun className="w-5 h-5" />
+          ) : (
+            <Moon className="w-5 h-5" />
+          )}
+        </button>
+
         <h2 className="flex items-center justify-center gap-2 text-2xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">
           💎 حاسبة شحن الماس
         </h2>
@@ -223,6 +279,8 @@ function App() {
                   <div>💎 نتيجة: {s.result}</div>
                   <div>💲 سعر: {s.rate}</div>
                   <div>🔄 الحالة: {scenarioNames[s.scenario]}</div>
+                  <div>👤 ID: {s.userId}</div>
+                  <div>🕒 {s.dateTime}</div>
                 </div>
                 <button
                   onClick={() => handleDelete(s.id)}
@@ -242,6 +300,46 @@ function App() {
           إغلاق
         </button>
       </div>
+      {showIdModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-80 shadow-2xl">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
+                أدخل ID الشخص
+              </h3>
+              <button
+                onClick={() => setShowIdModal(false)}
+                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <input
+              type="text"
+              value={tempId}
+              onChange={(e) => setTempId(e.target.value)}
+              placeholder="مثال: 30.9"
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 mb-4 focus:ring-2 focus:ring-indigo-400"
+            />
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowIdModal(false)}
+                className="flex-1 px-3 py-2 rounded-lg bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-600 transition"
+              >
+                إلغاء
+              </button>
+              <button
+                onClick={confirmShip}
+                className="flex-1 px-3 py-2 rounded-lg bg-green-600 text-white font-bold hover:bg-green-700 transition"
+              >
+                حفظ
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
