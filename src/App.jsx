@@ -190,21 +190,21 @@ function App() {
         <label className="block text-gray-800 dark:text-gray-200 font-bold mb-3 text-sm tracking-wide px-1">
           اختر الحالة:
         </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-5 sm:mb-6">
-          {Object.entries(SCENARIO_NAMES).map(([key, name]) => (
-            <button
-              key={key}
-              onClick={() => setScenario(key)}
-              className={`p-2.5 sm:p-3 rounded-lg sm:rounded-xl font-bold transition-all duration-300 backdrop-blur-md text-[12px] sm:text-[13px] md:text-sm outline-none border flex items-center justify-center leading-snug
-                ${
-                  scenario === key
-                    ? "bg-indigo-600/90 dark:bg-blue-600/90 text-white shadow-md sm:shadow-lg shadow-indigo-500/30 border-indigo-500/50 dark:border-blue-500/50 ring-2 ring-indigo-400 dark:ring-blue-500/50 scale-[1.01] sm:scale-[1.02]"
-                    : "bg-white/40 dark:bg-[#2c2c2e]/60 text-gray-800 dark:text-gray-200 border-white/50 dark:border-white/5 hover:bg-white/60 dark:hover:bg-[#3a3a3c]/70 hover:scale-[1.01] sm:hover:scale-[1.02]"
-                }`}
-            >
-              {name}
-            </button>
-          ))}
+        <div className="relative mb-5 sm:mb-6 group">
+          <select
+             value={scenario}
+             onChange={(e) => setScenario(e.target.value)}
+             className="w-full p-3.5 pl-10 sm:p-4 sm:pl-12 rounded-lg sm:rounded-xl border border-white/50 dark:border-white/5 bg-white/40 dark:bg-[#2c2c2e]/60 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-blue-500 backdrop-blur-md transition-all text-sm sm:text-base font-bold appearance-none shadow-sm cursor-pointer"
+          >
+            {Object.entries(SCENARIO_NAMES).map(([key, name]) => (
+              <option key={key} value={key} className="bg-white dark:bg-[#1c1c1e] text-gray-900 dark:text-gray-100 font-bold">
+                {name}
+              </option>
+            ))}
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center px-4 text-indigo-500 dark:text-blue-500">
+            <svg className="fill-current h-4 w-4 sm:h-5 sm:w-5 transition-transform group-focus-within:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+          </div>
         </div>
 
         <div className="relative mb-4 sm:mb-6 group">
