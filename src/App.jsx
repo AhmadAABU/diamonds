@@ -150,24 +150,24 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-emerald-400 dark:from-black dark:via-neutral-950 dark:to-black animate-gradient flex items-center justify-center p-4 relative overflow-hidden font-sans transition-colors duration-500">
-      {/* Background Orbs */}
-      <div className="absolute top-0 -left-4 w-72 h-72 bg-cyan-400 dark:bg-blue-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-70 animate-blob"></div>
-      <div className="absolute top-0 -right-4 w-72 h-72 bg-fuchsia-400 dark:bg-purple-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-amber-400 dark:bg-rose-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-emerald-400 dark:from-black dark:via-neutral-950 dark:to-black flex items-center justify-center px-4 py-20 sm:p-4 relative overflow-x-hidden font-sans transition-colors duration-500">
+      {/* Background Orbs - Static for performance */}
+      <div className="absolute top-0 -left-10 sm:-left-4 w-64 h-64 sm:w-72 sm:h-72 bg-cyan-400 dark:bg-blue-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-2xl sm:blur-3xl opacity-70"></div>
+      <div className="absolute top-0 -right-10 sm:-right-4 w-64 h-64 sm:w-72 sm:h-72 bg-fuchsia-400 dark:bg-purple-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-2xl sm:blur-3xl opacity-70"></div>
+      <div className="absolute -bottom-8 left-10 sm:left-20 w-64 h-64 sm:w-72 sm:h-72 bg-amber-400 dark:bg-rose-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-2xl sm:blur-3xl opacity-70"></div>
 
-      <div className="relative w-full max-w-md rounded-3xl shadow-2xl shadow-indigo-500/20 dark:shadow-black/90 p-8 pt-10 transition-all duration-500 backdrop-blur-2xl bg-white/70 dark:bg-[#1c1c1e]/70 border border-white/50 dark:border-white/5 z-10">
-        <h2 className="flex items-center justify-center gap-3 text-3xl font-extrabold mb-8 drop-shadow-sm pb-2">
-          <span className="drop-shadow-md">💎</span>
+      <div className="relative w-full max-w-md rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl shadow-indigo-500/20 dark:shadow-black/90 p-6 pt-8 sm:p-8 sm:pt-10 transition-all duration-500 backdrop-blur-2xl bg-white/70 dark:bg-[#1c1c1e]/70 border border-white/50 dark:border-white/5 z-10 mx-auto">
+        <h2 className="flex items-center justify-center gap-2 sm:gap-3 text-2xl sm:text-3xl font-extrabold mb-6 sm:mb-8 drop-shadow-sm pb-1 sm:pb-2">
+          <span className="drop-shadow-md text-xl sm:text-3xl">💎</span>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-800 to-purple-800 dark:from-indigo-400 dark:to-purple-400">حاسبة شحن الماس</span>
         </h2>
 
-        <div className="flex justify-center gap-4 mb-8 flex-wrap">
+        <div className="flex justify-center items-center gap-3 sm:gap-4 mb-6 sm:mb-8 flex-wrap">
           {[54, 57.5].map((val) => (
             <button
               key={val}
               onClick={() => setRate(val)}
-              className={`px-5 py-2.5 rounded-xl font-bold transition-all duration-300 backdrop-blur-md outline-none
+              className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl font-bold transition-all duration-300 backdrop-blur-md outline-none text-sm sm:text-base
                 ${
                   rate === val
                     ? "bg-indigo-600/90 dark:bg-blue-600/90 text-white shadow-lg shadow-indigo-500/30 scale-105 border border-indigo-500/50 dark:border-blue-500/50"
@@ -183,23 +183,23 @@ function App() {
             placeholder="مخصص"
             value={customRate}
             onChange={handleCustomRate}
-            className="w-28 p-2.5 rounded-xl border border-white/50 dark:border-white/5 bg-white/40 dark:bg-[#2c2c2e]/60 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-blue-500 backdrop-blur-md transition-all placeholder-gray-500 dark:placeholder-gray-400 font-semibold text-center"
+            className="w-24 sm:w-28 p-2 sm:p-2.5 rounded-lg sm:rounded-xl border border-white/50 dark:border-white/5 bg-white/40 dark:bg-[#2c2c2e]/60 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-blue-500 backdrop-blur-md transition-all placeholder-gray-500 dark:placeholder-gray-400 font-semibold text-center text-sm sm:text-base"
           />
         </div>
 
         <label className="block text-gray-800 dark:text-gray-200 font-bold mb-3 text-sm tracking-wide px-1">
           اختر الحالة:
         </label>
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-5 sm:mb-6">
           {Object.entries(SCENARIO_NAMES).map(([key, name]) => (
             <button
               key={key}
               onClick={() => setScenario(key)}
-              className={`p-3 rounded-xl font-bold transition-all duration-300 backdrop-blur-md text-[13px] sm:text-sm outline-none border flex items-center justify-center
+              className={`p-2.5 sm:p-3 rounded-lg sm:rounded-xl font-bold transition-all duration-300 backdrop-blur-md text-[12px] sm:text-[13px] md:text-sm outline-none border flex items-center justify-center leading-snug
                 ${
                   scenario === key
-                    ? "bg-indigo-600/90 dark:bg-blue-600/90 text-white shadow-lg shadow-indigo-500/30 border-indigo-500/50 dark:border-blue-500/50 ring-2 ring-indigo-400 dark:ring-blue-500/50"
-                    : "bg-white/40 dark:bg-[#2c2c2e]/60 text-gray-800 dark:text-gray-200 border-white/50 dark:border-white/5 hover:bg-white/60 dark:hover:bg-[#3a3a3c]/70 hover:scale-[1.02]"
+                    ? "bg-indigo-600/90 dark:bg-blue-600/90 text-white shadow-md sm:shadow-lg shadow-indigo-500/30 border-indigo-500/50 dark:border-blue-500/50 ring-2 ring-indigo-400 dark:ring-blue-500/50 scale-[1.01] sm:scale-[1.02]"
+                    : "bg-white/40 dark:bg-[#2c2c2e]/60 text-gray-800 dark:text-gray-200 border-white/50 dark:border-white/5 hover:bg-white/60 dark:hover:bg-[#3a3a3c]/70 hover:scale-[1.01] sm:hover:scale-[1.02]"
                 }`}
             >
               {name}
@@ -207,15 +207,15 @@ function App() {
           ))}
         </div>
 
-        <div className="relative mb-4 group">
+        <div className="relative mb-4 sm:mb-6 group">
           <input
             type="number"
             placeholder="أدخل رقم"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="w-full p-4 pl-12 rounded-xl border border-white/50 dark:border-white/5 bg-white/40 dark:bg-[#2c2c2e]/60 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-blue-500 backdrop-blur-md transition-all text-lg font-bold shadow-sm"
+            className="w-full p-3.5 pl-10 sm:p-4 sm:pl-12 rounded-lg sm:rounded-xl border border-white/50 dark:border-white/5 bg-white/40 dark:bg-[#2c2c2e]/60 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-blue-500 backdrop-blur-md transition-all text-base sm:text-lg font-bold shadow-sm"
           />
-          <Calculator className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-500 dark:text-blue-500 w-6 h-6 transition-transform group-focus-within:scale-110" />
+          <Calculator className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 text-indigo-500 dark:text-blue-500 w-5 h-5 sm:w-6 sm:h-6 transition-transform group-focus-within:scale-110" />
         </div>
 
         {result && (
@@ -250,22 +250,22 @@ function App() {
       {/* Theme Toggle Button - Fixed Top Left */}
       <button
         onClick={toggleTheme}
-        className="fixed top-6 left-6 z-50 bg-white/40 dark:bg-[#1c1c1e]/60 backdrop-blur-xl border border-white/50 dark:border-white/5 text-gray-800 dark:text-gray-200 p-2.5 rounded-full shadow-lg hover:scale-110 hover:bg-white/60 dark:hover:bg-[#2c2c2e]/70 transition-all duration-300 outline-none"
+        className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 bg-white/40 dark:bg-[#1c1c1e]/60 backdrop-blur-xl border border-white/50 dark:border-white/5 text-gray-800 dark:text-gray-200 p-2 sm:p-2.5 rounded-full shadow-lg hover:scale-110 hover:bg-white/60 dark:hover:bg-[#2c2c2e]/70 transition-all duration-300 outline-none"
         title="تغيير المظهر"
       >
         {theme === "dark" ? (
-          <Sun className="w-5 h-5 text-yellow-400 drop-shadow-md" />
+          <Sun className="w-5 h-5 sm:w-5 sm:h-5 text-yellow-400 drop-shadow-md" />
         ) : (
-          <Moon className="w-5 h-5 text-indigo-600 drop-shadow-md" />
+          <Moon className="w-5 h-5 sm:w-5 sm:h-5 text-indigo-600 drop-shadow-md" />
         )}
       </button>
 
       <button
         onClick={() => setOverlayOpen(!overlayOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-white/40 dark:bg-[#1c1c1e]/60 backdrop-blur-xl border border-white/50 dark:border-white/5 text-indigo-800 dark:text-blue-400 p-3 rounded-full shadow-xl hover:scale-110 hover:bg-white/60 dark:hover:bg-[#2c2c2e]/70 transition-all duration-300 outline-none"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-white/40 dark:bg-[#1c1c1e]/60 backdrop-blur-xl border border-white/50 dark:border-white/5 text-indigo-800 dark:text-blue-400 p-2.5 sm:p-3 rounded-full shadow-xl hover:scale-110 hover:bg-white/60 dark:hover:bg-[#2c2c2e]/70 transition-all duration-300 outline-none"
         title="عرض الشحنات"
       >
-        <div className="text-xl drop-shadow-md">📦</div>
+        <div className="text-lg sm:text-xl drop-shadow-md">📦</div>
       </button>
 
       {/* Overlay Backdrop */}
@@ -277,7 +277,7 @@ function App() {
       )}
 
       <div
-        className={`fixed top-0 right-0 w-80 sm:w-96 h-full backdrop-blur-2xl bg-white/80 dark:bg-[#1c1c1e]/90 shadow-2xl p-6 border-l border-white/40 dark:border-white/10 transition-transform duration-500 ease-out z-40 overflow-y-auto
+        className={`fixed top-0 right-0 w-[85vw] max-w-[320px] sm:max-w-none sm:w-80 md:w-96 h-full backdrop-blur-2xl bg-white/85 dark:bg-[#1c1c1e]/95 shadow-2xl p-5 sm:p-6 border-l border-white/40 dark:border-white/10 transition-transform duration-500 ease-out z-40 overflow-y-auto
         ${overlayOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="flex justify-between items-center mb-6 border-b border-gray-200 dark:border-[#2c2c2e] pb-4">
@@ -328,8 +328,8 @@ function App() {
       </div>
 
       {showIdModal && (
-        <div className="fixed inset-0 bg-gray-900/40 dark:bg-black/70 backdrop-blur-md flex items-center justify-center z-50 animate-fade-in p-4">
-          <div className="bg-white/90 dark:bg-[#1c1c1e]/90 backdrop-blur-xl border border-white/50 dark:border-white/10 rounded-3xl p-8 w-full max-w-sm shadow-2xl animate-fade-in-up">
+        <div className="fixed inset-0 bg-gray-900/50 dark:bg-black/80 backdrop-blur-md flex items-center justify-center z-50 animate-fade-in p-4 sm:p-6">
+          <div className="bg-white/95 dark:bg-[#1c1c1e]/95 backdrop-blur-xl border border-white/50 dark:border-white/10 rounded-[2rem] sm:rounded-3xl p-6 sm:p-8 w-full max-w-[90%] sm:max-w-sm shadow-2xl animate-fade-in-up">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-extrabold text-gray-800 dark:text-gray-100">
                 👤 أدخل ID الشخص
