@@ -213,7 +213,7 @@ function App() {
                   }`}
                 onClick={() => setScenario(isActive ? scenario : pair.scenarioA)}
               >
-                <span>{currentFrom} -> {currentTo}</span>
+              <span>{currentFrom} {"->"} {currentTo}</span>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
